@@ -3,16 +3,11 @@ defmodule SilverVine.Token do
   Documentation for `SilverVine.Token`.
   """
 
-  @doc """
-  Hello world.
+  alias KittenBlue.{JWS, JWK}
 
-  ## Examples
-
-      iex> SilverVine.Token.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  @spec generate_token(key :: JWK.t(), payload :: map, header :: map) ::
+          {:ok, token :: String.t()} | {:error, term}
+  def generate_token(key = %JWK{}, payload = %{}, header = %{}) do
+    JWS.sign(payload, key, header)
   end
 end

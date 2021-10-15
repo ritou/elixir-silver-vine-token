@@ -1,11 +1,11 @@
-defmodule SilverVine.Token.OAuth2.AccessToken do
+defmodule SilverVine.Token.OAuth2.RefreshToken do
   @moduledoc """
-  A module to represent OAuth 2.0 Access Token using JWT.
+  A module to represent OAuth 2.0 Refresh Token using JWT.
   """
 
   @behaviour SilverVine.Token.Base
 
-  @jwt_header_typ "at+jwt"
+  @jwt_header_typ "rt+jwt"
 
   alias SilverVine.Token
 
