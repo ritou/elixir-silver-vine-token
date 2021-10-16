@@ -12,11 +12,19 @@ defmodule SilverVine.TokenTest do
        ]
        |> JWK.from_compact()
 
-  test "generate_token" do
+  test "generate, verify" do
     payload = %{"foo" => "bar"}
-    assert {:ok, token} = Token.generate_token(@key, payload, %{"typ" => "abc"})
-    assert %JOSE.JWT{fields: token_payload}  = JOSE.JWT.peek_payload(token)
+
+    #generate
+    assert {:ok, token} = Token.generate(@key, payload, "abc")
+    assert %JOSE.JWT{fields: token_payload} = JOSE.JWT.peek_payload(token)
     assert token_payload == payload
+    assert %JOSE.JWS{fields: token_protected} = JOSE.JWT.peek_protected(token)
+    assert token_protected["typ"] == "abc"
+
+    # verify
+    assert {:ok, payload} == Token.verify(token, [@key], "abc")
+    assert {:error, :invalid_jwt_header} == Token.verify(token, [@key], "xyz")
   end
 
   test "put_jti" do

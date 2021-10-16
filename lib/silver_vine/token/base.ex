@@ -12,5 +12,5 @@ defmodule SilverVine.Token.Base do
 
   # callback
   @callback generate(payload, key) :: {:ok, token} | {:error, term}
-  @callback verify(token, keys, valid_claims) :: {:ok, payload} | {:error, term}
+  @callback verify(token, keys) :: {:ok, payload} | {:error, term}
 end
