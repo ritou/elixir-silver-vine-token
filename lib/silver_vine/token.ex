@@ -10,4 +10,7 @@ defmodule SilverVine.Token do
   def generate_token(key = %JWK{}, payload = %{}, header = %{}) do
     JWS.sign(payload, key, header)
   end
+
+  @spec put_jti(payload :: map) :: map()
+  def put_jti(payload), do: Map.put(payload, "jti", UUID.uuid4())
 end
