@@ -14,6 +14,7 @@ defmodule SilverVine.Token.OAuth2.RefreshToken do
 
   NOTE: Please validate the Payload before calling this function.
   """
+  @spec generate(payload, key) :: {:ok, token} | {:error, term}
   def generate(
         payload = %{
           "iss" => _,
