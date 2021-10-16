@@ -7,13 +7,25 @@ defmodule SilverVine.Token.OAuth2.AuthorizationCode do
 
   @jwt_header_typ "ac+jwt"
 
+  alias SilverVine.Token
+
   @doc """
   Generate a token string (JWS) from the Payload map and key information.
+
+  NOTE: Please validate the Payload before calling this function.
   """
-  def generate(_payload, _key = %KittenBlue.JWK{}) do
-    # TODO:
-    # 1. validate Payload
-    # 2. generate JWS
-    {:ok, "AUTHORIZATIONCODESTRING"}
+  def generate(
+        payload = %{
+          "iss" => _,
+          "exp" => _,
+          "aud" => _,
+          "sub" => _,
+          "client_id" => _,
+          "iat" => _,
+          "auth_id" => _
+        },
+        key = %KittenBlue.JWK{}
+      ) do
+    Token.generate_token(key, payload, %{"typ" => @jwt_header_typ})
   end
 end

@@ -11,8 +11,21 @@ defmodule SilverVine.Token.OAuth2.RefreshToken do
 
   @doc """
   Generate a token string (JWS) from the Payload map and key information.
+
+  NOTE: Please validate the Payload before calling this function.
   """
-  def generate(payload, key = %KittenBlue.JWK{}) do
+  def generate(
+        payload = %{
+          "iss" => _,
+          "exp" => _,
+          "aud" => _,
+          "sub" => _,
+          "client_id" => _,
+          "iat" => _,
+          "auth_id" => _
+        },
+        key = %KittenBlue.JWK{}
+      ) do
     Token.generate_token(key, payload, %{"typ" => @jwt_header_typ})
   end
 end
