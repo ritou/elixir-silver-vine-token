@@ -29,12 +29,12 @@ defmodule SilverVine.Token.OAuth2.AuthorizationCode do
         },
         key = %KittenBlue.JWK{}
       ),
-      do: Token.generate(key, payload, @jwt_header_typ)
+      do: Token.generate(key, payload |> Token.put_jti(), @jwt_header_typ)
 
   @doc """
   Verify signature and typ header.
   """
   @spec verify(token :: String.t(), keys :: List.t()) ::
           {:ok, payload :: map} | {:error, term}
-  def verify(token, keys = []), do: Token.verify(token, keys, @jwt_header_typ)
+  def verify(token, keys), do: Token.verify(token, keys, @jwt_header_typ)
 end

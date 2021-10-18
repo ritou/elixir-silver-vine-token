@@ -8,13 +8,14 @@ defmodule SilverVine.Token.OAuth2.AccessToken do
   @jwt_header_typ "at+jwt"
 
   alias SilverVine.Token
+  alias KittenBlue.JWK
 
   @doc """
   Generate a token string (JWS) from the Payload map and key information.
 
   NOTE: Please validate the Payload before calling this function.
   """
-  @spec generate(payload :: map, key :: KittenBlue.JWK.t()) ::
+  @spec generate(payload :: map, key :: JWK.t()) ::
           {:ok, token :: String.t()} | {:error, term}
   def generate(
         payload = %{
@@ -26,14 +27,14 @@ defmodule SilverVine.Token.OAuth2.AccessToken do
           "iat" => _,
           "auth_id" => _
         },
-        key = %KittenBlue.JWK{}
+        key = %JWK{}
       ),
-      do: Token.generate(key, payload, @jwt_header_typ)
+      do: Token.generate(key, payload |> Token.put_jti(), @jwt_header_typ)
 
   @doc """
   Verify signature and typ header.
   """
   @spec verify(token :: String.t(), keys :: List.t()) ::
           {:ok, payload :: map} | {:error, term}
-  def verify(token, keys = []), do: Token.verify(token, keys, @jwt_header_typ)
+  def verify(token, keys), do: Token.verify(token, keys, @jwt_header_typ)
 end
