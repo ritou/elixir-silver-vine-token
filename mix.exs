@@ -30,7 +30,7 @@ defmodule SilverVine.Token.MixProject do
     [
       {:jason, "~> 1.2"},
       {:kitten_blue, "~> 0.5"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
 
       # for docs
       {:ex_doc, "~> 0.25.3", only: :dev, runtime: false}
