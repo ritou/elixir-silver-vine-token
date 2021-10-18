@@ -34,7 +34,7 @@ defmodule SilverVine.Token.OAuth2.RefreshToken do
   @doc """
   Verify signature and typ header.
   """
-  @spec verify(token :: String.t(), keys :: List.t()) ::
+  @spec verify(token :: String.t(), keys :: list(JWK.t())) ::
           {:ok, payload :: map} | {:error, term}
   def verify(token, keys), do: Token.verify(token, keys, @jwt_header_typ)
 end

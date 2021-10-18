@@ -8,7 +8,7 @@ defmodule SilverVine.Token.Base do
   @type valid_claims :: map
   @type token :: String.t()
   @type key :: KittenBlue.JWK.t()
-  @type keys :: List.t()
+  @type keys :: list
 
   # callback
   @callback generate(payload, key) :: {:ok, token} | {:error, term}
